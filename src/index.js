@@ -70,9 +70,6 @@ async function onLoadMore() {
 	} catch (error) {
 		console.log(error);
 	}
-
-
-		
 	}
 
 async function onSubmitSend(e) {
@@ -115,7 +112,9 @@ async function onSubmitSend(e) {
 };
 
 //---Functions
+
 buttonHide()
+
 function renderMarkUP(picture) {
 	const markeUp = picture.map(pic => cardTemplate(pic)).join(' ');
 	picContainer.insertAdjacentHTML('beforeend', markeUp);;
@@ -129,7 +128,8 @@ function clearContainer() {
 
 function buttonHide() {
 		loadMore.classList.add('is-hiden');
-	}
+}
+	
 function buttonShow() {
 		loadMore.classList.remove('is-hiden');
 }
