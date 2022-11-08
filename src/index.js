@@ -7,13 +7,13 @@ import cardTemplate from './templates/card-pic.hbs';
 
 
 //Light-box------
-const lightbox = new SimpleLightbox('.photo-card a',
+	const lightbox = new SimpleLightbox('.photo-card a',
 	{
 		captionsData: 'alt',
 		captionDelay: 250,
 		captions: true,
-	});
-console.log(lightbox);
+		});
+
 
 
 let searchQuery = '';
@@ -36,20 +36,22 @@ searchForm.addEventListener('submit', onSubmitSend);
 
 async function onLoadMore() {
 	currentPage += 1;
-	
 	const response = await axiosGet(searchQuery, currentPage, perPage);
+	
 	totalPage = response.totalHits / perPage
 	renderMarkUP(response.hits);
-	lightbox.refresh();
+	
 	const { height: cardHeight } = document.querySelector(".gallery")
   	.firstElementChild.getBoundingClientRect();
 
 			window.scrollBy({
   			top: cardHeight * 100,
   			behavior: "smooth",
-	});
+			});
+	
 	try {
-			if (currentPage >= totalPage) {
+		if (currentPage >= totalPage) {
+
 				buttonHide()
 				backBthShow()
 				backBth.addEventListener('click', function (e) {
@@ -70,6 +72,7 @@ async function onLoadMore() {
 	} catch (error) {
 		console.log(error);
 	}
+	lightbox.refresh();// ставить всегда после разметки(а лучше в конце функции)
 	}
 
 async function onSubmitSend(e) {
@@ -89,8 +92,9 @@ async function onSubmitSend(e) {
 		if (response.hits.length > 0) {
 			Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
 			clearContainer();
-			lightbox.refresh();
 			renderMarkUP(response.hits);
+			lightbox.refresh();
+			
 		} 
 
 		if (currentPage < totalPage) {
@@ -117,7 +121,7 @@ buttonHide()
 
 function renderMarkUP(picture) {
 	const markeUp = picture.map(pic => cardTemplate(pic)).join(' ');
-	picContainer.insertAdjacentHTML('beforeend', markeUp);;
+	picContainer.insertAdjacentHTML('beforeend', markeUp);
 	
 }
 
