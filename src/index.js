@@ -24,6 +24,7 @@ let totalPage = 0;
 const searchForm = document.querySelector('.search-form');
 const loadMore = document.querySelector('.load-more');
 const picContainer = document.querySelector('.gallery');
+const backBth = document.querySelector('.bth-back');
 console.log(loadMore);
 console.log(searchForm);
 
@@ -32,6 +33,7 @@ console.log(searchForm);
 loadMore.addEventListener('click', onLoadMore);
 searchForm.addEventListener('submit', onSubmitSend);
 
+
 async function onLoadMore() {
 	currentPage += 1;
 	
@@ -39,16 +41,29 @@ async function onLoadMore() {
 	totalPage = response.totalHits / perPage
 	renderMarkUP(response.hits);
 	lightbox.refresh();
-	// const { height: cardHeight } = document.querySelector(".gallery")
-  	// // .firstElementChild.getBoundingClientRect();
+	const { height: cardHeight } = document.querySelector(".gallery")
+  	.firstElementChild.getBoundingClientRect();
 
-	// // 		window.scrollBy({
-  	// // 		top: cardHeight * 2,
-  	// // 		behavior: "smooth",
-	// // });
+			window.scrollBy({
+  			top: cardHeight * 100,
+  			behavior: "smooth",
+	});
 	try {
 			if (currentPage >= totalPage) {
-		loadMore.classList.add('is-hiden');
+				buttonHide()
+				backBthShow()
+				backBth.addEventListener('click', function (e) {
+					e.preventDefault();
+				const { height: cardHeight } = document.querySelector(".gallery")
+  				.firstElementChild.getBoundingClientRect();
+
+				window.scrollBy({
+  				top: cardHeight * -200,
+  				behavior: "smooth",
+	});
+				})
+				
+
 		Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
 	}
 
@@ -59,8 +74,6 @@ async function onLoadMore() {
 
 		
 	}
-
-
 
 async function onSubmitSend(e) {
 	e.preventDefault();
@@ -85,8 +98,10 @@ async function onSubmitSend(e) {
 
 		if (currentPage < totalPage) {
 			buttonShow();
+			backBthHide();
 		} else {
 			buttonHide();
+			backBthHide();
 			Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
 		}
 		
@@ -100,10 +115,10 @@ async function onSubmitSend(e) {
 };
 
 //---Functions
-
+buttonHide()
 function renderMarkUP(picture) {
 	const markeUp = picture.map(pic => cardTemplate(pic)).join(' ');
-	picContainer.innerHTML = markeUp;
+	picContainer.insertAdjacentHTML('beforeend', markeUp);;
 	
 }
 
@@ -119,6 +134,16 @@ function buttonShow() {
 		loadMore.classList.remove('is-hiden');
 }
 
+
+backBthHide()
+function backBthHide() {
+	backBth.classList.add('is-hide');
+}
+
+
+function backBthShow() {
+	backBth.classList.remove('is-hide');
+}
 
 
 
