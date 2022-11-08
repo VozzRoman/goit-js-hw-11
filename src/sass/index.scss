@@ -1,0 +1,52 @@
+@import './common';
+@import './example';
+button{
+	cursor: pointer;
+}
+.container {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+.bg-color{
+	background-color: burlywood;
+}
+
+.gallery{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+}
+
+.photo-card{
+	border-radius: 8px;
+	border: 1px solid gray;
+	overflow: hidden;
+
+	
+}
+.info{
+	padding: 20px;
+}
+
+.search-form{
+	display: flex;
+	justify-content: center;
+	margin: 40px;
+	background-color: antiquewhite;
+	padding: 20px;
+}
+
+.load-more{
+	
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	&.is-hiden{
+		display: none;
+	}
+
+}
